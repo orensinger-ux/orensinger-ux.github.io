@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Oren's Pages</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0e1116; color:#e8e6e3; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; line-height:1.5; padding:28px 14px 70px; }
+  .wrap { max-width:1040px; margin:0 auto; }
+
+  /* ---------- hero ---------- */
+  .hero { position:relative; border:1px solid #262c36; border-radius:20px; padding:30px 26px 26px; margin-bottom:30px;
+          background:radial-gradient(120% 160% at 12% 0%, #1b2330 0%, #141922 45%, #10141b 100%); overflow:hidden; }
+  .hero::after { content:""; position:absolute; right:-70px; top:-70px; width:230px; height:230px; border-radius:50%;
+                 background:radial-gradient(circle, rgba(232,183,106,.16) 0%, rgba(232,183,106,0) 68%); pointer-events:none; }
+  .hero .kicker { font-size:11.5px; letter-spacing:2.2px; text-transform:uppercase; color:#8b919b; font-weight:600; }
+  .hero h1 { font-size:34px; font-weight:800; letter-spacing:.2px; margin-top:6px;
+             background:linear-gradient(92deg,#f2ede4 20%,#e8b76a 85%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero p.sub { color:#9aa0aa; font-size:14px; margin-top:8px; max-width:560px; }
+  .hero .chips { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+  .chip { font-size:12px; padding:4px 12px; border-radius:999px; background:#1a2029; border:1px solid #2a313d; color:#aeb6c2; }
+  .chip b { color:#e8b76a; font-weight:700; }
+  .hero .actions { margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; }
+  .btn-new { font-size:13px; font-weight:700; color:#0e1116; text-decoration:none; padding:8px 20px; border-radius:999px; background:#8fd3a8; }
+  .btn-idea { font-size:13px; font-weight:600; color:#7ab3f0; text-decoration:none; border:1px solid #2c3a4d; padding:8px 18px; border-radius:999px; background:#182230; }
+
+  /* ---------- groups ---------- */
+  h2 { font-size:13px; text-transform:uppercase; letter-spacing:1.6px; color:#7c828c; margin:34px 4px 14px; display:flex; align-items:center; gap:10px; }
+  h2::after { content:""; flex:1; height:1px; background:#232933; }
+  h2 .count { font-size:11px; color:#62686f; letter-spacing:.5px; font-weight:500; }
+
+  .grid { display:grid; grid-template-columns:1fr; gap:14px; }
+  @media (min-width:720px) { .grid { grid-template-columns:1fr 1fr; } }
+
+  /* ---------- page card ---------- */
+  .card { display:flex; gap:16px; background:#171b22; border:1px solid #262c36; border-radius:16px; padding:18px; align-items:flex-start;
+          transition:border-color .15s ease, transform .15s ease; }
+  .card:hover { border-color:#39424f; transform:translateY(-1px); }
+  .thumb { flex:0 0 58px; width:58px; height:58px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:27px;
+           border:1px solid rgba(255,255,255,.07); }
+  .card .body { flex:1; min-width:0; }
+  .card .titlerow { display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .card .title { font-size:16.5px; font-weight:700; }
+  .fresh { font-size:11px; color:#8b919b; white-space:nowrap; }
+  .fresh.live { color:#8fd3a8; }
+  .fresh.live::before { content:"●"; font-size:8px; margin-right:5px; vertical-align:1.5px; }
+  .card .desc { color:#9aa0aa; font-size:13px; margin-top:4px; }
+  .card .actions { margin-top:12px; display:flex; gap:8px; align-items:center; }
+  .open { font-size:12.5px; font-weight:700; color:#0e1116; text-decoration:none; padding:6px 18px; border-radius:999px; background:#e8b76a; }
+  .del { font-size:12px; font-weight:600; color:#c98a80; text-decoration:none; padding:6px 14px; border-radius:999px; border:1px solid #3a2c2a; background:#221a19; }
+  .del:hover { background:#2c1f1d; }
+
+  footer { margin-top:44px; font-size:11.5px; color:#62686f; text-align:center; line-height:1.7; }
+  footer b { color:#8b919b; font-weight:600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="kicker">Instinct &middot; Personal Hub</div>
+    <h1>Oren&rsquo;s Pages</h1>
+    <p class="sub">Every page built for you, in one place. Trips, daily scouts, records &mdash; kept current automatically.</p>
+    <div class="chips">
+      <span class="chip"><b>7</b> pages</span>
+      <span class="chip"><b>3</b> update themselves daily</span>
+      <span class="chip"><b>2</b> trips tracked</span>
+    </div>
+    <div class="actions">
+      <a class="btn-new" id="newpage" href="#">+ New page</a>
+      <a class="btn-idea" id="feedback" href="#">Send feedback</a>
+    </div>
+  </div>
+
+  <div id="groups"></div>
+
+  <footer>
+    <b>How the buttons work:</b> Delete and New page draft an email from you to yourself with the instruction in the subject &mdash; send it and it gets done.<br>
+    Built and maintained by Instinct. Pages update in place; this hub grows as new ones ship.
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   CONTENT CONFIG - to add/edit/remove a page, touch ONLY this
+   array. One object per page; group order follows GROUPS below.
+   ============================================================ */
+const GROUPS = [
+  { id:"trips",   label:"Trips" },
+  { id:"daily",   label:"Every Day" },
+  { id:"records", label:"Records" },
+];
+
+const PAGES = [
+  { group:"trips", icon:"\u2708\uFE0F", grad:"linear-gradient(135deg,#2b3a55,#1a2333)",
+    title:"Bella Kay - Portland", url:"https://sites.google.com/view/instinct-pages/bella-kay-portland",
+    desc:"Sep 30 - Oct 1. Flights, the Hoxton, Wonder Ballroom tickets with meet & greet, rental car, food plan.",
+    updated:"Updated Aug 31" },
+
+  { group:"trips", icon:"\uD83C\uDDEE\uD83C\uDDF1", grad:"linear-gradient(135deg,#274a6b,#16283c)",
+    title:"Israel Trip - English", url:"https://sites.google.com/view/instinct-pages/israel-trip-english",
+    desc:"Full October itinerary, day by day.",
+    updated:"Updated Aug 31" },
+
+  { group:"trips", icon:"\uD83C\uDDEE\uD83C\uDDF1", grad:"linear-gradient(135deg,#274a6b,#16283c)",
+    title:"Israel Trip - \u05E2\u05D1\u05E8\u05D9\u05EA", url:"https://sites.google.com/view/instinct-pages/israel-he",
+    desc:"\u05D0\u05D5\u05EA\u05D5 \u05DE\u05E1\u05DC\u05D5\u05DC, \u05D1\u05E2\u05D1\u05E8\u05D9\u05EA - \u05DC\u05DE\u05E9\u05E4\u05D7\u05D4.",
+    updated:"Updated Aug 31" },
+
+  { group:"daily", icon:"\uD83C\uDFB8", grad:"linear-gradient(135deg,#4a3320,#241a10)",
+    title:"Concert Scout", url:"https://sites.google.com/view/instinct-pages/concert-scout",
+    desc:"Every morning: shows from your promoter mail, tuned to your taste, with prices, YouTube links and Buy buttons.",
+    updated:"Refreshes daily \u00B7 7:30 AM", live:true },
+
+  { group:"daily", icon:"\uD83E\uDEA9", grad:"linear-gradient(135deg,#3c2545,#1e1324)",
+    title:"Club Scout - Bay Area", url:"https://sites.google.com/view/instinct-pages/club-scout-bay-area",
+    desc:"Club nights from 19hz and the local rooms, per artist with real subgenres and a track each.",
+    updated:"Refreshes daily \u00B7 8:30 AM", live:true },
+
+  { group:"daily", icon:"\uD83D\uDCF6", grad:"linear-gradient(135deg,#1e4038,#0f211d)",
+    title:"AT&T Speed Monitor", url:"https://sites.google.com/view/instinct-pages/att-speed-monitor",
+    desc:"Three gateway speed tests a day through Sep 7, charted against the 940 Mbps you're paying for.",
+    updated:"Tests 3\u00D7 daily \u00B7 ends Sep 7", live:true },
+
+  { group:"records", icon:"\uD83C\uDFAB", grad:"linear-gradient(135deg,#443024,#221812)",
+    title:"My Tickets", url:"https://sites.google.com/view/instinct-pages/my-tickets",
+    desc:"Everything already paid for, grouped by month - prices, order numbers, links to each confirmation email.",
+    updated:"Updated Aug 31" },
+];
+/* ================== end of editable config ================== */
+
+const groupsEl = document.getElementById("groups");
+GROUPS.forEach(g => {
+  const items = PAGES.filter(p => p.group === g.id);
+  if (!items.length) return;
+  const h = document.createElement("h2");
+  h.innerHTML = g.label + ' <span class="count">' + items.length + (items.length===1 ? " page" : " pages") + "</span>";
+  groupsEl.appendChild(h);
+  const grid = document.createElement("div");
+  grid.className = "grid";
+  items.forEach(p => {
+    const del = "mailto:oren.singer@gmail.com?subject=" + encodeURIComponent("DELETE PAGE: " + p.title);
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML =
+      '<div class="thumb" style="background:' + p.grad + '">' + p.icon + '</div>' +
+      '<div class="body">' +
+        '<div class="titlerow"><span class="title">' + p.title + '</span>' +
+        '<span class="fresh' + (p.live ? " live" : "") + '">' + p.updated + '</span></div>' +
+        '<div class="desc">' + p.desc + '</div>' +
+        '<div class="actions">' +
+          '<a class="open" href="' + p.url + '">Open</a>' +
+          '<a class="del" href="' + del + '">Delete</a>' +
+        '</div>' +
+      '</div>';
+    grid.appendChild(card);
+  });
+  groupsEl.appendChild(grid);
+});
+
+document.getElementById("newpage").href = "mailto:oren.singer@gmail.com?subject=" + encodeURIComponent("NEW PAGE: ");
+document.getElementById("feedback").href = "mailto:oren.singer@gmail.com?subject=" + encodeURIComponent("PAGE FEEDBACK: ");
+</script>
+</body>
+</html>
