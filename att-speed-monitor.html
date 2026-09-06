@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home Internet Speed Monitor</title>
+<style>
+body{margin:0;background:#0d1117;color:#e6edf3;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:16px}
+h1{font-size:20px;margin:4px 0 2px} .sub{color:#8b949e;font-size:13px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:14px}
+.clabel{color:#8b949e;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.cval{font-size:26px;font-weight:700;margin-top:4px} .cunit{font-size:13px;color:#8b949e;font-weight:400}
+.csub{color:#8b949e;font-size:11px;margin-top:2px}
+h2{font-size:15px;margin:18px 0 8px}
+table{width:100%;border-collapse:collapse;font-size:13px;background:#161b22;border-radius:12px;overflow:hidden}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #21262d}
+th{color:#8b949e;font-weight:600;font-size:12px}
+.legend{color:#8b949e;font-size:12px;margin-top:6px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.src{color:#8b949e;font-size:12px;margin-top:16px}
+.home{display:inline-block;font-size:12.5px;font-weight:600;color:#7ab3f0;text-decoration:none;border:1px solid #2c3a4d;padding:6px 14px;border-radius:999px;background:#182230;margin-bottom:16px;}
+</style></head><body>
+<a class="home" href="index.html">&larr; Home</a>
+<h1>Home Internet Speed Monitor</h1>
+<div class="sub" id="sub"></div>
+<div class="grid" id="cards"></div>
+<h2>Speed over time</h2>
+<svg id="chart" viewBox="0 0 720 260" width="100%" preserveAspectRatio="xMidYMid meet" style="background:#161b22;border-radius:12px"></svg>
+<div class="legend"><span class="dot" style="background:#58a6ff"></span>Download &nbsp; <span class="dot" style="background:#3fb950"></span>Upload &nbsp; <span class="dot" style="background:#f0883e"></span>940 Mbps plan reference</div>
+<h2>All tests</h2>
+<table><thead><tr><th>When</th><th>Slot</th><th>Down (Mbps)</th><th>Up (Mbps)</th><th>Latency (ms)</th><th>Note</th></tr></thead><tbody id="rows"></tbody></table>
+<div class="src">Source: AT&amp;T Smart Home Manager gateway speed test (att.com/support/speedtest, "Speed to home"). Measures the line into the house, not Wi-Fi.</div>
+<script src="att-speed-data.js"></script>
+<script>
+const tests = SPEED_TESTS;
+const ran = tests.filter(x => x.down != null);
+const avg = a => Math.round(a.reduce((s,v)=>s+v,0)/a.length);
+document.getElementById("sub").innerHTML = 'AT&amp;T Fiber gateway tests ("speed to home") &middot; plan: up to 940 Mbps &middot; last test: ' + (ran.length ? ran[0].t : "none yet");
+const cards = [
+  ["Avg download", avg(ran.map(x=>x.down)), " Mbps"],
+  ["Avg upload", avg(ran.map(x=>x.up)), " Mbps"],
+  ["Worst download", Math.min(...ran.map(x=>x.down)), " Mbps"],
+  ["Tests run", ran.length, " "],
+];
+document.getElementById("cards").innerHTML = cards.map(c =>
+  '<div class="card"><div class="clabel">'+c[0]+'</div><div class="cval">'+c[1]+'<span class="cunit">'+c[2]+'</span></div><div class="csub"></div></div>').join("");
+
+// chart: chronological left-to-right, y = 57 + (1299 - v) * 0.36667 (940 line at y=188.7)
+const chrono = ran.slice().reverse();
+const n = chrono.length, x0 = 44, x1 = 708;
+const X = i => (x0 + i*(x1-x0)/Math.max(n-1,1)).toFixed(1);
+const Y = v => (57 + (1299 - v)*0.36667).toFixed(1);
+let svg = '<line x1="44" y1="188.7" x2="708" y2="188.7" stroke="#f0883e" stroke-dasharray="6 4" stroke-width="1.5"></line>' +
+  '<text x="704" y="182.7" fill="#f0883e" font-size="11" text-anchor="end">1-gig plan (940 Mbps)</text>';
+if (n) {
+  svg += '<polyline points="' + chrono.map((x,i)=>X(i)+','+Y(x.down)).join(' ') + '" fill="none" stroke="#58a6ff" stroke-width="2.5"></polyline>';
+  svg += '<polyline points="' + chrono.map((x,i)=>X(i)+','+Y(x.up)).join(' ') + '" fill="none" stroke="#3fb950" stroke-width="2.5"></polyline>';
+}
+document.getElementById("chart").innerHTML = svg;
+
+document.getElementById("rows").innerHTML = tests.map(x =>
+  '<tr><td>'+x.t+'</td><td>'+x.slot+'</td><td>'+(x.down==null?"missed":x.down)+'</td><td>'+(x.up==null?"-":x.up)+'</td><td>-</td><td>'+(x.note||"")+'</td></tr>').join("");
+</script>
+</body></html>

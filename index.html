@@ -64,7 +64,7 @@
     <h1>Oren&rsquo;s Pages</h1>
     <p class="sub">Every page built for you, in one place. Trips, daily scouts, records &mdash; kept current automatically.</p>
     <div class="chips">
-      <span class="chip"><b>7</b> pages</span>
+      <span class="chip"><b>8</b> pages</span>
       <span class="chip"><b>3</b> update themselves daily</span>
       <span class="chip"><b>2</b> trips tracked</span>
     </div>
@@ -94,40 +94,45 @@ const GROUPS = [
 ];
 
 const PAGES = [
+  { group:"trips", icon:"\uD83C\uDDEE\uD83C\uDDF1", grad:"linear-gradient(135deg,#274a6b,#16283c)",
+    title:"Israel Trip - English", url:"israel-trip-english.html",
+    desc:"Full October itinerary, day by day. New Lufthansa-operated outbound via Munich.",
+    updated:"Updated Sep 6" },
+
+  { group:"trips", icon:"\uD83C\uDDEE\uD83C\uDDF1", grad:"linear-gradient(135deg,#274a6b,#16283c)",
+    title:"Israel Trip - \u05E2\u05D1\u05E8\u05D9\u05EA", url:"israel-trip-hebrew.html",
+    desc:"\u05D0\u05D5\u05EA\u05D5 \u05DE\u05E1\u05DC\u05D5\u05DC, \u05D1\u05E2\u05D1\u05E8\u05D9\u05EA - \u05DC\u05DE\u05E9\u05E4\u05D7\u05D4.",
+    updated:"Updated Sep 6" },
+
+  { group:"trips", icon:"\uD83C\uDFA4", grad:"linear-gradient(135deg,#4a2b55,#241533)",
+    title:"Israel Shows - Oct 2026", url:"israel-shows-oct-2026.html",
+    desc:"Tel Aviv & Haifa, Oct 24-29. Israeli indie first, with Buy buttons and ticket links.",
+    updated:"Updated Sep 6" },
+
   { group:"trips", icon:"\u2708\uFE0F", grad:"linear-gradient(135deg,#2b3a55,#1a2333)",
-    title:"Bella Kay - Portland", url:"https://sites.google.com/view/instinct-pages/bella-kay-portland",
+    title:"Bella Kay - Portland", url:"bella-kay-portland.html",
     desc:"Sep 30 - Oct 1. Flights, the Hoxton, Wonder Ballroom tickets with meet & greet, rental car, food plan.",
     updated:"Updated Aug 31" },
 
-  { group:"trips", icon:"\uD83C\uDDEE\uD83C\uDDF1", grad:"linear-gradient(135deg,#274a6b,#16283c)",
-    title:"Israel Trip - English", url:"https://sites.google.com/view/instinct-pages/israel-trip-english",
-    desc:"Full October itinerary, day by day.",
-    updated:"Updated Aug 31" },
-
-  { group:"trips", icon:"\uD83C\uDDEE\uD83C\uDDF1", grad:"linear-gradient(135deg,#274a6b,#16283c)",
-    title:"Israel Trip - \u05E2\u05D1\u05E8\u05D9\u05EA", url:"https://sites.google.com/view/instinct-pages/israel-he",
-    desc:"\u05D0\u05D5\u05EA\u05D5 \u05DE\u05E1\u05DC\u05D5\u05DC, \u05D1\u05E2\u05D1\u05E8\u05D9\u05EA - \u05DC\u05DE\u05E9\u05E4\u05D7\u05D4.",
-    updated:"Updated Aug 31" },
-
   { group:"daily", icon:"\uD83C\uDFB8", grad:"linear-gradient(135deg,#4a3320,#241a10)",
-    title:"Concert Scout", url:"https://sites.google.com/view/instinct-pages/concert-scout",
+    title:"Concert Scout", url:"concert-scout.html",
     desc:"Every morning: shows from your promoter mail, tuned to your taste, with prices, YouTube links and Buy buttons.",
     updated:"Refreshes daily \u00B7 7:30 AM", live:true },
 
   { group:"daily", icon:"\uD83E\uDEA9", grad:"linear-gradient(135deg,#3c2545,#1e1324)",
-    title:"Club Scout - Bay Area", url:"https://sites.google.com/view/instinct-pages/club-scout-bay-area",
+    title:"Club Scout - Bay Area", url:"club-scout-bay-area.html",
     desc:"Club nights from 19hz and the local rooms, per artist with real subgenres and a track each.",
     updated:"Refreshes daily \u00B7 8:30 AM", live:true },
 
   { group:"daily", icon:"\uD83D\uDCF6", grad:"linear-gradient(135deg,#1e4038,#0f211d)",
-    title:"AT&T Speed Monitor", url:"https://sites.google.com/view/instinct-pages/att-speed-monitor",
+    title:"AT&T Speed Monitor", url:"att-speed-monitor.html",
     desc:"Three gateway speed tests a day through Sep 7, charted against the 940 Mbps you're paying for.",
     updated:"Tests 3\u00D7 daily \u00B7 ends Sep 7", live:true },
 
   { group:"records", icon:"\uD83C\uDFAB", grad:"linear-gradient(135deg,#443024,#221812)",
-    title:"My Tickets", url:"https://sites.google.com/view/instinct-pages/my-tickets",
+    title:"My Tickets", url:"my-tickets.html",
     desc:"Everything already paid for, grouped by month - prices, order numbers, links to each confirmation email.",
-    updated:"Updated Aug 31" },
+    updated:"Updated Sep 5" },
 ];
 /* ================== end of editable config ================== */
 
@@ -165,3 +170,4 @@ document.getElementById("feedback").href = "mailto:oren.singer@gmail.com?subject
 </script>
 </body>
 </html>
+
