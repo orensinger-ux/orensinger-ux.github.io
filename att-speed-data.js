@@ -4,6 +4,9 @@
 // cards, chart and table from this data - never edit the HTML for new data.
 // down/up = Mbps (null = missed test). note = "" or short text.
 const SPEED_TESTS = [
+  
+  {"t": "Sep 6, 9:51 PM", "slot": "evening", "down": 1278, "up": 1408, "note": "fired ~45 min late"},
+
   {
     "t": "Sep 6, 1:46 PM",
     "slot": "midday",
