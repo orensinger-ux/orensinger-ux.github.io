@@ -5,6 +5,9 @@
 // down/up = Mbps (null = missed test). note = "" or short text.
 const SPEED_TESTS = [
   
+  {"t": "Sep 7, 1:56 PM", "slot": "midday", "down": 1275, "up": 1275, "note": "fired ~45 min late"},
+
+  
   {"t": "Sep 7, 8:49 AM", "slot": "morning", "down": 1298, "up": 1345, "note": "fired ~45 min late"},
 
   
